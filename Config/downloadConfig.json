@@ -1,0 +1,8 @@
+{
+  "$type": "FastDownload.Models.DownloadConfig, FastDownload",
+  "CodeSavePath": "",
+  "ModelSavePath": "",
+  "IDMFilePath": "",
+  "ThunderFilePath": "",
+  "Aria2FilePath": ""
+}
