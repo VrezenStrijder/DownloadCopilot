@@ -1,7 +1,7 @@
 <div align="center">
 
 <h1>Download Copilot</h1>
-<p align="center">English | <a href="./doc/readme_cn.md">中文</a> </p>
+<p align="center">English | <a href="./docs/readme_cn.md">中文</a> </p>
 
 <p>An assistant to help you download files from Github and Huggingface.</p>
 
@@ -19,22 +19,22 @@
 ## 截图
 
 - Automatic login  
-![screenshot](./shortcuts/01.png)
+![screenshot](./docs/shortcuts/01.png)
 
 - Two-way interaction
-![screenshot](./shortcuts/02.png)
+![screenshot](./docs/shortcuts/02.png)
 
 - Get branch    
-![screenshot](./shortcuts/03.png)
+![screenshot](./docs/shortcuts/03.png)
 
 - Call IDM to download    
-![screenshot](./shortcuts/04.png)
+![screenshot](./docs/shortcuts/04.png)
 
 - Fetch model files from Huggingface
-![screenshot](./shortcuts/05.png)
+![screenshot](./docs/shortcuts/05.png)
 
 - Download from mirror site    
-![screenshot](./shortcuts/06.png)
+![screenshot](./docs/shortcuts/06.png)
 
 ## Feedback
 
