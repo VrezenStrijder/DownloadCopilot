@@ -135,6 +135,13 @@ namespace DownloadCopilot
             UpdateMirrorList(cmbMirror, "GitHub");
             cmbMirror.SelectedIndexChanged += (s, e) =>
             {
+                // 清除选中状态
+                var fileList = this.Controls.Find("fileList", true).FirstOrDefault() as ListView;
+                foreach (ListViewItem item in fileList.Items)
+                {
+                    item.Checked = false;
+                }
+
                 if (cmbMirror.SelectedIndex > 0)
                 {
                     downloadManager.SetMirror(cmbMirror.SelectedItem.ToString());
@@ -329,7 +336,7 @@ namespace DownloadCopilot
                 Name = "txtPath",
                 Location = new Point(100, 117),
                 Size = new Size(460, 25),
-                Text = downloadConfig?.CodeSavePath?? @"D:\Codes"
+                Text = downloadConfig?.CodeSavePath ?? @"D:\Codes"
             };
 
             var btnBrowse = new Button
@@ -442,7 +449,7 @@ namespace DownloadCopilot
 
             string codesDir = downloadConfig?.CodeSavePath ?? @"D:\Codes";
             string modelsDir = downloadConfig?.ModelSavePath ?? @"D:\Models";
-            string downloadDir = (cmbSite.SelectedIndex==0)? codesDir : modelsDir;
+            string downloadDir = (cmbSite.SelectedIndex == 0) ? codesDir : modelsDir;
 
             var txtPath = this.Controls.Find("txtPath", true).FirstOrDefault() as TextBox;
             txtPath.Text = downloadDir;
@@ -507,6 +514,10 @@ namespace DownloadCopilot
                     }
 
                     UpdateStatus($"获取到 {branches.Count} 个分支");
+
+                    Task.Delay(300).Wait();
+                    var btnGetFiles = this.Controls.Find("btnGetFiles", true).FirstOrDefault() as Button;
+                    btnGetFiles?.PerformClick();
                 }
                 else if (SiteType == SiteType.HuggingFace)
                 {
@@ -669,20 +680,21 @@ namespace DownloadCopilot
 
                 // 设置镜像
                 var cmbMirror = this.Controls.Find("cmbMirror", true).FirstOrDefault() as ComboBox;
+
                 if (cmbMirror != null && cmbMirror.SelectedIndex > 0)
                 {
                     githubSite.MirrorUrl = cmbMirror.SelectedItem.ToString();
+                    selectedItems.ForEach(t =>
+                    {
+                        if (!t.DownloadUrl.StartsWith(githubSite.MirrorUrl))
+                        {
+                            t.DownloadUrl = $"{githubSite.MirrorUrl}/{t.DownloadUrl}";
+                        }
+                    });
                 }
 
                 // 下载文件
                 bool flag = await DownloadFilesAsync(selectedItems, downloaderType);
-                //foreach (var file in selectedItems)
-                //{
-                //    UpdateStatus($"正在下载: {file.Name}");
-
-                //    // 根据下载器类型执行下载
-                //    bool success = await DownloadFileAsync(file, downloaderType);
-                //}
 
                 MessageBox.Show("下载完成！", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
